@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>同人・イベント制作支援ツールポータル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-color: #F6F3EA;
+    --card-bg: #FFFFFF;
+    --text-main: #1C1A17;
+    --text-sub: #5B564C;
+    --muted: #9C978B;
+    --line: #DED8C8;
+    --accent: #C6303E;
+    --accent-hover: #A8283A;
+  }
+
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background:
+      linear-gradient(var(--bg-color), var(--bg-color)),
+      repeating-linear-gradient(0deg, rgba(28,26,23,0.025) 0px, rgba(28,26,23,0.025) 1px, transparent 1px, transparent 28px),
+      repeating-linear-gradient(90deg, rgba(28,26,23,0.025) 0px, rgba(28,26,23,0.025) 1px, transparent 1px, transparent 28px);
+    color: var(--text-main);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 48px 24px 24px;
+  }
+
+  h1 {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-weight: 700;
+    font-size: clamp(22px, 4vw, 30px);
+    letter-spacing: 0.04em;
+    margin: 0 0 12px 0;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-sub);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  main {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px;
+    flex: 1;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(28,26,23,0.06);
+  }
+
+  .card-header {
+    margin-bottom: 16px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    background: #F0EDE4;
+    color: var(--text-sub);
+  }
+
+  .tag.format {
+    background: var(--text-main);
+    color: #FFFFFF;
+  }
+
+  .tool-title {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .tool-desc {
+    font-size: 13px;
+    color: var(--text-sub);
+    line-height: 1.7;
+    margin: 0 0 24px 0;
+  }
+
+  .btn-open {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--text-main);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-open:hover {
+    background-color: var(--accent);
+  }
+
+  .terms-banner {
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .terms-text {
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  .terms-text strong {
+    color: var(--text-main);
+  }
+
+  .terms-link {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  .terms-link:hover {
+    color: var(--accent-hover);
+  }
+
+  footer {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px 24px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>制作・イベント支援ツール</h1>
+  <p class="subtitle">同人誌の宣伝用カード作成や、コンビニ印刷向けの面付作業をブラウザ上で完結できるWebツール集です。</p>
+  <p class="subtitle">当ツール上でアップロードした画像は保存されません(ページ内でのみ使用され、送信・保存は行われません)。</p>
+</header>
+
+<main>
+  <div class="tool-grid">
+
+    <!-- 1. あらすじカード作成ツール -->
+    <article class="tool-card">
+      <div>
+        <div class="card-header">
+          <div class="tags">
+            <span class="tag">A6サイズ</span>
+            <span class="tag format">PNG</span>
+          </div>
+          <h2 class="tool-title">あらすじカード作成ツール</h2>
+        </div>
+        <p class="tool-desc">画像と文字情報を組み合わせたあらすじカードを作成できます。オフイベ時の作品紹介やSNS上での告知などにご利用いただけます。</p>
+      </div>
+      <a href="https://kanashiki1979.github.io/synopsis-card/" class="btn-open" target="_blank" rel="noopener">ツールを開く ↗</a>
+    </article>
+
+    <!-- 2. あらすじカード面付ツール -->
+    <article class="tool-card">
+      <div>
+        <div class="card-header">
+          <div class="tags">
+            <span class="tag">A4 4面/2面</span>
+            <span class="tag format">PDF</span>
+            <span class="tag">コンビニ印刷向け</span>
+          </div>
+          <h2 class="tool-title">あらすじカード面付ツール</h2>
+        </div>
+        <p class="tool-desc">作成したカード画像をA4用紙へ綺麗に配置します。余白を広めに確保しています。</p>
+      </div>
+      <a href="https://kanashiki1979.github.io/arasuji_card-imposition/" class="btn-open" target="_blank" rel="noopener">ツールを開く ↗</a>
+    </article>
+
+    <!-- 3. A4用紙4面画配置ツール -->
+    <article class="tool-card">
+      <div>
+        <div class="card-header">
+          <div class="tags">
+            <span class="tag">A4 4面（余白なし）</span>
+            <span class="tag format">PDF</span>
+            <span class="tag">コンビニ印刷向け</span>
+          </div>
+          <h2 class="tool-title">A4用紙4面画配置ツール</h2>
+        </div>
+        <p class="tool-desc">画像4枚をA4用紙いっぱいにぴったり配置します。「面付ツール」より余白がなく、ミニフライヤーなどで用紙サイズ一杯に使いたい場合に便利です。</p>
+      </div>
+      <a href="https://kanashiki1979.github.io/kantan_flyer/" class="btn-open" target="_blank" rel="noopener">ツールを開く ↗</a>
+    </article>
+
+    <!-- 4. 名札名刺面付ツール -->
+    <article class="tool-card">
+      <div>
+        <div class="card-header">
+          <div class="tags">
+            <span class="tag">A4 10面</span>
+            <span class="tag format">PDF</span>
+            <span class="tag">コンビニ印刷向け</span>
+          </div>
+          <h2 class="tool-title">即売会・イベント用 名札名刺面付</h2>
+        </div>
+        <p class="tool-desc">アイコン・お名前・連絡先などを配置したカードを10枚配置作成できます。値札カードや差し入れ用メモなどにも応用可能です。</p>
+      </div>
+      <a href="https://kanashiki1979.github.io/meishi_yokogata/" class="btn-open" target="_blank" rel="noopener">ツールを開く ↗</a>
+    </article>
+
+  </div>
+
+  <div class="terms-banner">
+    <div class="terms-text">
+      <strong>ご利用にあたって</strong><br>
+      各ツールは無料でお使いいただけます。ご利用前に必ず規約をご確認ください。
+    </div>
+    <a href="https://github.com/kanashiki1979/terms" class="terms-link" target="_blank" rel="noopener">利用規約・免責事項を確認する ↗</a>
+  </div>
+</main>
+
+<footer>
+  &copy; kanashiki1979 / WEB TOOLS FOR CREATORS
+</footer>
+
+</body>
+</html>
